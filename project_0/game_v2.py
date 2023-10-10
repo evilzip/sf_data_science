@@ -20,6 +20,32 @@ def random_predict(number:int=1)->int:
             break# выход из цикла если угадали        
     return count
 
+def smart_predict(number:int)->int:
+    """Угадывает число методом деления диапазона поиска пополам
+
+    Args:
+        number (int): Число которое нужно угадать
+
+    Returns:
+        int: число попыток
+    """
+    count = 0
+    max_number = 101#начальный "правая" граница диапазона поиска 
+    min_number = 0# начальная "левая граница" диапазона поискаc
+    while True:
+        count += 1
+        if number == (max_number+min_number) // 2:# проверяем лежит ли искомое число посередине текущего диапазона
+            break
+        elif number<(max_number+min_number) // 2:#если число меньше центрального значения диапазона, то сдвигаем правую границу влево на половину
+            max_number=(max_number+min_number) // 2 #новое значение правой границы нового дипазона поиска
+        elif number>(max_number+min_number) // 2: #если число больше центрального значения диапазона, то сдвигаем левую границу вправо на половину
+            min_number = (max_number+min_number) // 2 #новое значени левой границы нового диапазона поиска
+    return count
+                
+            
+    
+    
+
 def score_game(random_predict) -> int:
     """За какое количество попыток в среднем за 1000 подхов угадывает наш алгоритм
 
@@ -41,5 +67,6 @@ def score_game(random_predict) -> int:
     return score
 
 if __name__=='__main__':
-    score_game(random_predict)
+    print(score_game(random_predict))
+    print(score_game(smart_predict))
 
